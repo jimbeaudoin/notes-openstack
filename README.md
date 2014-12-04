@@ -1,6 +1,16 @@
 openstack-notes
 ===============
 
+#### Install QEMU
+```sh
+sudo apt-get install qemu-system qemu-utils
+```
+
+#### Create an Image with QEMU
+```sh
+qemu-img create -f qcow2 <image_name>.qcow2 10G
+```
+
 #### Convert Image with QEMU
 ```sh
 # Convert from vdi to qcow2
