@@ -16,3 +16,14 @@ qemu-img create -f qcow2 <image_name>.qcow2 10G
 # Convert from vdi to qcow2
 qemu-img convert -f vdi -O qcow2 ubuntu.vdi ubuntu.qcow2
 ```
+
+#### Nova Commands
+```sh
+nova list # List Servers
+
+```
+
+#### Neutron Commands
+```sh
+neutron net-list # List Networks
+```
