@@ -1,4 +1,4 @@
-openstack-notes
+notes-openstack
 ===============
 
 #### Install QEMU
