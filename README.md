@@ -6,9 +6,70 @@ notes-openstack
 sudo apt-get install qemu-system qemu-utils
 ```
 
-#### Create an Image with QEMU
+#### Create an Virtual Drive with QEMU
 ```sh
 qemu-img create -f qcow2 <image_name>.qcow2 10G
+```
+
+### Create Script
+```sh
+#!/bin/bash
+
+#### Configuration #####
+#
+QEMU_KVM='qemu-system-x86_64'
+CPUs="cores=4,threads=1,socket=1"
+RAM=1024
+CLOCK_BASE="utc"
+#
+########################
+
+
+if [ $# -lt 2 ]; then
+cat <<EOF
+Usage: $0 drive cdrom
+
+    drive       Virtual drive where the system will be installed
+    cdrom       ISO installer of the operating system
+
+EOF
+    exit 1
+fi
+
+bin_qemu_kvm=`which $QEMU_KVM | wc -l`
+if [ "$bin_qemu_kvm" == "0" ]; then
+    echo "The program $QEMU_KVM cannot be found"
+    exit 1
+fi
+
+if [ ! -f "$1" ]; then
+    echo "The virtual drive file $QEMU_KVM doesn't exist"
+    exit 1
+fi
+
+if [ ! -f "$2" ]; then
+    echo "The ISO installer $QEMU_KVM doesn't exist"
+    exit 1
+fi
+
+$QEMU_KVM \
+        -nodefaults \
+        -drive file=$1,if=virtio,id=drive-virtiodisk0,cache=none \
+        -cdrom $2 \
+        -boot once=d,menu=on \
+        -enable-kvm \
+        -cpu host \
+        -smp $CPUs \
+        -m $RAM \
+        -rtc base=$CLOCK_BASE,clock=host \
+        -netdev user,id=usernet,net=169.254.0.0/16,hostfwd=tcp::2222-:22,hostfwd=tcp::8080-:80 \
+        -device virtio-net-pci,netdev=usernet \
+        -vga cirrus
+```
+### Execute
+```sh
+chmod +x qemu-install
+./qemu-install debian-7-32.qcow2 debian-7.5.0-i386-netinst.iso
 ```
 
 #### Convert an Image with QEMU
