@@ -61,9 +61,8 @@ $QEMU_KVM \
         -cpu host \
         -smp $CPUs \
         -m $RAM \
+        -netdev user,id=network0 -device e1000,netdev=network0 \
         -rtc base=$CLOCK_BASE,clock=host \
-        -netdev user,id=usernet,net=169.254.0.0/16,hostfwd=tcp::2222-:22,hostfwd=tcp::8080-:80 \
-        -device virtio-net-pci,netdev=usernet \
         -vga cirrus
 ```
 ### Execute
