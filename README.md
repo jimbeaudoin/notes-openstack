@@ -1,9 +1,9 @@
 notes-openstack
 ===============
 
-#### Install QEMU
+#### Install QEMU (With KVM Functionalities)
 ```sh
-sudo apt-get install qemu-system qemu-utils
+sudo apt-get install qemu-system qemu-utils qemu-kvm libvirt-bin
 ```
 
 #### Create an Virtual Drive with QEMU
